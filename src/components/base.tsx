@@ -5,7 +5,7 @@ import { config } from '../env'
 const safeScript = config.env.NODE_ENV === 'development' ? liveReloadScript() : ''
 
 export const BaseHtml = ({ children }: PropsWithChildren) => (
-	<html lang="en">
+	<html lang="en" class="scroll-smooth">
 		<head>
 			<meta charset="UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,11 +13,15 @@ export const BaseHtml = ({ children }: PropsWithChildren) => (
 			<script src="https://unpkg.com/htmx.org@1.9.5" />
 			<script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js" />
 			<script src="https://unpkg.com/hyperscript.org@0.9.11" />
-            <link href='/public/globals.css' rel='stylesheet' />
+			<link rel="preconnect" href="https://rsms.me/" />
+			<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+			<link href="/public/globals.css" rel="stylesheet" />
 			<script>{safeScript}</script>
 		</head>
-		<body hx-boost="true" class="h-screen">
-			<h1 class=" bg-blue-500 p-5 text-center text-3xl font-bold text-white shadow-md">Eirik Mo - Portfolio</h1>
+		<body
+			hx-boost="true"
+			class="bg-background selection:bg-teal-300 selection:text-teal-900 antialiased mx-auto max-w-screen-xl md:container font-sans"
+		>
 			{children}
 		</body>
 	</html>
