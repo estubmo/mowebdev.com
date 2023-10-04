@@ -1,18 +1,47 @@
-import { relations } from "drizzle-orm";
-import { user } from "./auth";
-import { tweets } from "./tweets";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { createSelectSchema } from "drizzle-typebox";
 
-export { tweets } from "./tweets";
+export const project = sqliteTable(
+  "project",
+  {
+    id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+    data: text("data"),
 
-export { key, session, user } from "./auth";
+    createdAt: integer("createdAt", { mode: "timestamp" })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+);
+export type Project = typeof project.$inferSelect;
 
-export const userRelations = relations(user, ({ many }) => ({
-  tweets: many(tweets),
-}));
+export const selectProjectSchema = createSelectSchema(project);
 
-export const tweetsRelations = relations(tweets, ({ one }) => ({
-  author: one(user, {
-    fields: [tweets.authorId],
-    references: [user.id],
-  }),
-}));
+export const work = sqliteTable(
+  "work",
+  {
+    id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+    data: text("data"),
+
+    createdAt: integer("createdAt", { mode: "timestamp" })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+);
+export type Work = typeof work.$inferSelect;
+
+export const selectWorkSchema = createSelectSchema(work);
+
+export const showcase = sqliteTable(
+  "showcase",
+  {
+    id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+    data: text("data"),
+
+    createdAt: integer("createdAt", { mode: "timestamp" })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  },
+);
+export type Showcase = typeof showcase.$inferSelect;
+
+export const selectShowcaseSchema = createSelectSchema(showcase);

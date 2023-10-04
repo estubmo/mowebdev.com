@@ -1,5 +1,5 @@
 type RoutesByType<
-  Schema extends Record<string, any>, // Ensure keys are strings
+Schema  extends Record<string, unknown>, // Ensure keys are strings
   Type extends "get" | "post" | "put" | "delete" | "patch",
 > = RouterPattern<
   RemoveSlash<
@@ -46,11 +46,11 @@ type PatchRoutes = RoutesByType<Schema, "patch">;
 
 declare namespace JSX {
   interface HtmlTag extends Htmx.Attributes {
-    ["hx-get"]?: StartsWithApi<GetRoutes>;
-    ["hx-post"]?: StartsWithApi<PostRoutes>;
-    ["hx-put"]?: StartsWithApi<PutRoutes>;
-    ["hx-delete"]?: StartsWithApi<DeleteRoutes>;
-    ["hx-patch"]?: StartsWithApi<PatchRoutes>;
+    "hx-get"?: StartsWithApi<GetRoutes>;
+    "hx-post"?: StartsWithApi<PostRoutes>;
+    "hx-put"?: StartsWithApi<PutRoutes>;
+    "hx-delete"?: StartsWithApi<DeleteRoutes>;
+    "hx-patch"?: StartsWithApi<PatchRoutes>;
     _?: string;
   }
 }

@@ -1,13 +1,11 @@
 import { logger } from "@bogeychan/elysia-logger";
-import { Logger } from "@bogeychan/elysia-logger/types";
 import { cron } from "@elysiajs/cron";
 import { HoltLogger } from "@tlscipher/holt";
 import { bethStack } from "beth-stack/elysia";
 import { Elysia } from "elysia";
 import pretty from "pino-pretty";
-import { auth } from "../auth";
-import { config } from "../config";
 import { client, db } from "../db";
+import { config } from "../env";
 
 const stream = pretty({
   colorize: true,
@@ -26,7 +24,6 @@ export const ctx = new Elysia({
 })
   .decorate("db", db)
   .decorate("config", config)
-  .decorate("auth", auth)
   .use(bethStack())
   .use(logger(loggerConfig))
   .use(
@@ -66,7 +63,7 @@ export const ctx = new Elysia({
       log.debug(`Request received: ${request.method}: ${request.url}`);
     }
   })
-  .onResponse(({ log, request, set }) => {
+  .onResponse(({ log, request }) => {
     if (log && config.env.NODE_ENV === "production") {
       log.debug(`Response sent: ${request.method}: ${request.url}`);
     }
